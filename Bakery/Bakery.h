@@ -5,7 +5,10 @@
 
 class Bakery
 {
-private:
+
+public:
+	Bakery(float cash);
+	bool Bankrupt();
 	float cashFlow;
 	std::map<Ingredient, int> stock;
 	std::map<Product, int> store;

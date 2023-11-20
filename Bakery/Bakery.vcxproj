@@ -138,7 +138,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="GlobalHeader.h" />
     <ClInclude Include="Ingredient.h" />
-    <ClInclude Include="Market.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
@@ -147,7 +147,6 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Ingredient.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Market.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>

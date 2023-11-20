@@ -16,5 +16,5 @@ Ingredient::Ingredient(string name) {
 
 void Ingredient::Print()
 {
-	cout << "Ingredient : " << this->name << endl;
+	cout << "Ingredient : " << this->name << " : " << this->price << endl;
 }
