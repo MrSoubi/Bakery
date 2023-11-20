@@ -1,0 +1,30 @@
+<cookbook>
+    <recipe>
+        <name>Bread</name>
+        <ingredients>
+            <name>Flour</name>
+            <name>Baking powder</name>
+        </ingredients>
+        <price>1.5</price>
+    </recipe>
+    <recipe>
+       <name>Cheese cake</name>
+        <ingredients>
+            <name>Flour</name>
+            <name>Cheese</name>
+            <name>Eggs</name>
+        </ingredients>
+        <price>3.5</price>
+    </recipe>
+    <recipe>
+       <name>Olive cake</name>
+       <ingredients>
+            <name>Flour</name>
+            <name>Cheese</name>
+            <name>Olives</name>
+            <name>Eggs</name>
+            <name>Baking powder</name>
+        </ingredients>
+        <price>5</price>
+    </recipe>
+</cookbook>
