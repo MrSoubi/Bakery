@@ -1,19 +1,28 @@
-#include "GlobalHeader.h"
+#pragma once
+
+#include <ctime>
+#include <string>
+#include <vector>
+#include <iostream>
 
 #include "Bakery.h"
 #include "Utils.h"
 #include "main.h"
+
+std::vector<Product> products;
+std::vector<Ingredient> ingredients;
+Bakery player;
 
 int main() {
 	// Initialize random seed
 	srand(time(0));
 
 	char path[] = "Cookbook.xml";
-	vector<Product> products = Utils::ReadXML(path);
-	vector<Ingredient> ingredients = Utils::ReadXML_Ingredients(path);
+	products = Utils::ReadXML(path);
+	ingredients = Utils::ReadXML_Ingredients(path);
 	int day = 1;
 
-	Bakery player = Bakery(50.0f);
+	player = Bakery(50.0f);
 
 	while (!player.Bankrupt()) {
 		// Set ingredients prices
@@ -26,40 +35,83 @@ int main() {
 
 		// Needs to be changed, I should use class methods instead and keep only the logic here.
 		bool isBuyingIngredients = true;
-		string buySentence;
-		int quantity;
-		while (isBuyingIngredients) {
-			cout << "Choose the ingredients you want to buy :" << endl << endl;
-			for (int i = 0; i < ingredients.size(); i++) {
-				ingredients[i].Print();
-			}
-			cout << "Type the ingredient you want to buy (example : \"Flour\")" << endl;
-			cin >> buySentence;
 
+		int buyIndex;
+		int quantity;
+
+		while (isBuyingIngredients) {
+			std::cout << player.cashFlow << std::endl;
+			std::cout << "BUYING TIME" << std::endl << std::endl;
+
+			// Display the ingredients the player can buy
 			for (int i = 0; i < ingredients.size(); i++) {
-				if (buySentence == ingredients[i].name) {
-					cout << "Choose a quantity (max " << player.cashFlow / ingredients[i].GetPrice() << ") :" << endl;
-					string str;
-					cin >> str;
-					quantity = stof(str);
-					if (quantity < (player.cashFlow / ingredients[i].GetPrice())) {
-						player.stock.insert(make_pair(ingredients[i], quantity)); // CANT DO THIS !!! Use a comparator and add it to each map in the classes, see : https://stackoverflow.com/questions/5733254/how-can-i-create-my-own-comparator-for-a-map
-					}
-					break;
+				std::cout << i + 1 << ". " << ingredients[i].name << " " << ingredients[i].GetPrice() << "euros/u" << std::endl;
+			}
+
+			// Get the player choice
+			std::cout << "Select the ingredient you want to buy" << std::endl;
+			std::cin >> buyIndex;
+
+			// Apply the player's choice
+			if (buyIndex == 0) {
+				isBuyingIngredients = false;
+			}else if (buyIndex <= ingredients.size()) {
+				std::cout << "Choose a quantity (max " << (int)(player.cashFlow / ingredients[buyIndex-1].GetPrice()) << ") :" << std::endl;
+				std::cin >> quantity;
+				if (quantity < (player.cashFlow / ingredients[buyIndex-1].GetPrice())) {
+					player.cashFlow -= ingredients[buyIndex-1].GetPrice() * quantity;
+					player.stock.insert(std::make_pair(ingredients[buyIndex-1], quantity));
+					std::cout << player.stock[ingredients[buyIndex-1]];
 				}
 			}
-
-
-			Utils::AnalyzeBuyingOrder(buySentence, ingredients, player);
+			system("cls");
 		}
 
+		bool isCookingProducts = true;
+		int cookingIndex;
 
 		// Cook products
+		while (isCookingProducts) {
+			std::cout << player.cashFlow << std::endl;
+			std::cout << "COOKING TIME" << std::endl << std::endl;
 
+			// Display the products the player can cook
+			for (int i = 0; i < products.size(); i++) {
+				std::cout << i+1 << ". " << products[i].name << " " << products[i].price << "euros/u" << std::endl;
+			}
 
+			// Get the player choice
+			std::cout << "Select the products you want to cook" << std::endl;
+			std::cin >> cookingIndex;
+
+			// Apply the player's choice
+			if (cookingIndex == 0) {
+				isCookingProducts = false;
+			}
+			else if (cookingIndex <= products.size()) {
+				std::cout << "Choose a quantity (max : " << QuantityCookable(products[cookingIndex-1]) << ")" << std::endl;
+				std::cin >> quantity;
+				if (quantity < (player.cashFlow / ingredients[cookingIndex - 1].GetPrice())) {
+					player.cashFlow -= ingredients[cookingIndex - 1].GetPrice() * quantity;
+					player.stock.insert(std::make_pair(ingredients[cookingIndex - 1], quantity));
+					std::cout << player.stock[ingredients[cookingIndex - 1]];
+				}
+			}
+			system("cls");
+		}
 
 		// Create clients
 
 		// Sell items
 	}
+}
+
+int QuantityCookable(Product p) {
+	int result = 0;
+
+	for (int i = 0; i < p.recipe.size(); i++) {
+		if (result < player.stock[p.recipe[i]]) result = player.stock[p.recipe[i]];
+	}
+
+	return result;
 }

@@ -1,6 +1,9 @@
 #pragma once
-#include "GlobalHeader.h"
 
+#include <vector>
+#include <string>
+
+#include "Product.h"
 #include "Ingredient.h"
 
 class Product
@@ -9,12 +12,10 @@ class Product
 		return l.price < r.price;
 	}
 
-private:
-	string name;
-	float price;
-	vector<Ingredient> recipe;
-
 public:
-	Product(string name, float price, vector<Ingredient> recipe);
+	std::string name;
+	float price;
+	std::vector<Ingredient> recipe;
+	Product(std::string name, float price, std::vector<Ingredient> recipe);
 	void Print();
 };

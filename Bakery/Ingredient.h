@@ -1,5 +1,8 @@
 #pragma once
-#include "GlobalHeader.h"
+
+#include <string>
+
+#include "Ingredient.h"
 
 class Ingredient
 {
@@ -10,10 +13,15 @@ private:
 public:
 	void SetPrice();
 	float GetPrice();
-	Ingredient(string name);
+	Ingredient(std::string name);
 	void Print();
 	bool operator== (const Ingredient& i) const {
 		return (name == i.name && price == i.price);
 	}
-	string name;
+
+	constexpr bool operator<(const Ingredient& l) const {
+		return (l.price > price);
+	}
+
+	std::string name;
 };

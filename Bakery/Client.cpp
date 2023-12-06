@@ -1,9 +1,14 @@
+#pragma once
+
+#include <vector>
+#include <map>
+
 #include "Client.h"
 
-Client::Client(vector<Product> products)
+Client::Client(std::vector<Product> products)
 {
 	for (int i = 0; i < products.size(); i++) {
-		needs.insert(make_pair(products.at(i), 0));
+		needs.insert(std::make_pair(products.at(i), 0));
 	}
 }
 
@@ -14,7 +19,7 @@ void Client::SetNewNeeds()
 	}
 }
 
-map<Product, int> Client::GetNeeds()
+std::map<Product, int> Client::GetNeeds()
 {
-	return map<Product, int>();
+	return std::map<Product, int>();
 }

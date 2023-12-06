@@ -1,16 +1,17 @@
 #pragma once
-#include "GlobalHeader.h"
+
+#include <map>
+#include <vector>
 
 #include "Product.h"
 
 class Client
 {
 private:
-	map<Product, int> needs;
+	std::map<Product, int> needs;
 
 public:
-	Client(vector<Product> products);
+	Client(std::vector<Product> products);
 	void SetNewNeeds();
-	map<Product, int> GetNeeds();
+	std::map<Product, int> GetNeeds();
 };
-

@@ -1,20 +1,26 @@
+#pragma once
+
+#include <string>
+#include <vector>
+#include <tinyxml.h>
+
 #include "Utils.h"
 
-float Utils::StrToFloat(string s) {
+float Utils::StrToFloat(std::string s) {
 	return 1.0f;
 }
 
-vector<Product> Utils::ReadXML(char path[])
+std::vector<Product> Utils::ReadXML(char path[])
 {
-	vector<Product> products;
-	vector<Ingredient> ingredients;
+	std::vector<Product> products;
+	std::vector<Ingredient> ingredients;
 
 	TiXmlDocument doc(path);
 	if (doc.LoadFile()) {
 		TiXmlElement* currentRecipe = doc.RootElement()->FirstChildElement("recipe");
 
 		while (currentRecipe != NULL) {
-			string name = currentRecipe->FirstChildElement("name")->GetText();
+			std::string name = currentRecipe->FirstChildElement("name")->GetText();
 			float price = Utils::StrToFloat(currentRecipe->FirstChildElement("price")->GetText());
 
 			TiXmlElement* currentIngredient = currentRecipe->FirstChildElement("ingredients")->FirstChildElement("name");
@@ -35,10 +41,10 @@ vector<Product> Utils::ReadXML(char path[])
 	return products;
 }
 
-vector<Ingredient> Utils::ReadXML_Ingredients(char path[])
+std::vector<Ingredient> Utils::ReadXML_Ingredients(char path[])
 {
-	vector<Product> products;
-	vector<Ingredient> ingredients;
+	std::vector<Product> products;
+	std::vector<Ingredient> ingredients;
 
 	TiXmlDocument doc(path);
 	if (doc.LoadFile()) {
@@ -63,7 +69,7 @@ vector<Ingredient> Utils::ReadXML_Ingredients(char path[])
 	return ingredients;
 }
 
-bool Utils::Contains(vector<Ingredient> vec, Ingredient value)
+bool Utils::Contains(std::vector<Ingredient> vec, Ingredient value)
 {
 	for (int i = 0; i < vec.size(); i++) {
 		if (vec[i] == value) {
@@ -73,7 +79,7 @@ bool Utils::Contains(vector<Ingredient> vec, Ingredient value)
 	return false;
 }
 
-void Utils::AnalyzeBuyingOrder(string buyingOrder, vector<Ingredient> ingredients, Bakery player)
+void Utils::AnalyzeBuyingOrder(std::string buyingOrder, std::vector<Ingredient> ingredients, Bakery player)
 {
 	for (int i = 0; i < ingredients.size(); i++) {
 		if (buyingOrder.find(ingredients[i].name) != -1) {

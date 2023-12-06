@@ -1,4 +1,11 @@
+#pragma once
+
 #include "Bakery.h"
+
+Bakery::Bakery()
+{
+	cashFlow = 0;
+}
 
 Bakery::Bakery(float cash)
 {
